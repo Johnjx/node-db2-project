@@ -12,8 +12,12 @@ router.get('/:id', carMW.checkCarId, (req, res, next) => {
     res.json(req.car);
 })
 
-router.post('/', carMW.checkVinNumberValid, carMW.checkVinNumberUnique, (req, res, next) => {
-    res.send('vin valid ha')
+router.post(
+    '/',
+    carMW.checkVinNumberValid,
+    carMW.checkVinNumberUnique,
+    (req, res, next) => {
+        res.send('vin valid')
 })
 
 module.exports = router;

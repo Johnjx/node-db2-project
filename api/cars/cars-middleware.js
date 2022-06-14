@@ -38,8 +38,8 @@ const checkVinNumberValid = (req, res, next) => {
 
 const checkVinNumberUnique = (req, res, next) => {
   carModel.getByVin(req.body.vin)
-  .then(vin => {
-    if (vin == null) {
+  .then(vinResult => {
+    if (vinResult) {
       next({
         status: 400,
         message: `vin ${req.body.vin} already exists`
