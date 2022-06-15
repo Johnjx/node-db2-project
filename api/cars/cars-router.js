@@ -16,6 +16,7 @@ router.post(
     '/',
     carMW.checkVinNumberValid,
     carMW.checkVinNumberUnique,
+    carMW.checkCarPayload,
     (req, res, next) => {
         res.send('vin valid')
 })
