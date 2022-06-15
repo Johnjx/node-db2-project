@@ -14,11 +14,13 @@ router.get('/:id', carMW.checkCarId, (req, res, next) => {
 
 router.post(
     '/',
+    carMW.checkCarPayload,
     carMW.checkVinNumberValid,
     carMW.checkVinNumberUnique,
-    carMW.checkCarPayload,
     (req, res, next) => {
-        res.send('vin valid')
+        carModel.create(req.body)
+        .then(newCar => res.status(201).json(newCar))
+        .catch(next)
 })
 
 module.exports = router;

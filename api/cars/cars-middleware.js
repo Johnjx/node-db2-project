@@ -26,8 +26,12 @@ const checkCarId = (req, res, next) => {
 }
 
 const checkCarPayload = (req, res, next) => {
- let { vin, make, model, mileage, title, transmission } = req.body;
+ let { vin, make, model, mileage } = req.body;
  
+ if (!vin) {
+  next(createErr('vin'))
+  return;
+ }
  if (!make || make.trim().length < 1) {
   next(createErr('make'))
   return;
@@ -40,35 +44,6 @@ const checkCarPayload = (req, res, next) => {
   next(createErr('mileage'))
   return;
  }
- if (title) {
-  if (title !== 'salvage' && title !== 'clean') {
-    next(createErr('title'))
-    return;
-  }
-  make = make.trim();
-  model = model.trim();
-  title = title.trim();
-  req.body = { vin, make, model, mileage, title };
-  next();
-  return;
- }
- if (transmission) {
-  if (transmission !== 'manual' && transmission !== 'automatic') {
-    next(createErr('transmission'))
-    return;
-  }
-  make = make.trim();
-  model = model.trim();
-  title = title.trim();
-  transmission = transmission.trim();
-  req.body = { vin, make, model, mileage, title, transmission };
-  next();
-  return;
- }
-
- make = make.trim();
- model = model.trim();
- req.body = { vin, make, model, mileage };
  next();
 }
 
